@@ -36,44 +36,17 @@
       <div class="padded center">
           <p class="spacey">
             
-            <input type="checkbox" id="hint_stickers" checked="true"/>
-            <label for="hint_stickers">Hint Stickers</label>
-
-            <br>
-            <button id="alg_ccc">Cube-in-Cube-in-Cube</button>
-            <button id="lucasparity">lucasparity</button>
-            <button id="alg_superflip">Superflip</button>
-
-            <br>
-            Renderer:
-            <input type="radio" name="renderer" value="Canvas" id="renderer_Canvas"></input>
-            <label for="renderer_Canvas">Canvas</label>
-            <input type="radio" name="renderer" value="WebGL" id="renderer_WebGL" checked="true"></input>
-            <label for="renderer_WebGL">WebGL</label>
-            <input type="radio" name="renderer" value="SVG" id="renderer_SVG"></input>
-            <label for="renderer_SVG">SVG</label>
-
-            <br>
-            Stage:
-            <input type="radio" name="stage" value="full" id="stage_full" checked="true"></input>
-            <label for="stage_full">Full</label>
-            <input type="radio" name="stage" value="F2L" id="stage_F2L"></input>
-            <label for="stage_F2L">F2L</label>
-            <input type="radio" name="stage" value="PLL" id="stage_PLL"></input>
-            <label for="stage_PLL">PLL</label>
-            <input type="radio" name="stage" value="OLL" id="stage_OLL"></input>
-            <label for="stage_OLL">OLL</label>
-            
-            <br>
+			<!--
             Init: <input id="init" placeholder="Init." type="text" value = ""/>
             <br>
-			<button id="change">Change</button>
+			<button id="change">Clear</button>
             <input id="parse_alg" onclick placeholder="Alg to parse." type="text" value = "R2 U R U R' U' R' U' R' U R'"/>
             <input type="checkbox" id="solve"/><label for="solve">Solve</label>
             <br>
             <button id="parsed_alg1">Animate Alg (no slice moves)</button>
             <button id="parsed_alg2">Dynamic Playback</button>
-            
+            -->
+			
           </p>
       </div>
 
@@ -90,34 +63,51 @@
         <input id="speed" type="range" min="1" max="4" step="0.1" value="4"/>
       </center>
       <div class="padded center">
-      <div id="playback_alg">[Algorithm]</div>
-      </div>
-
-      <h2>Experimental Features</h2>
-      <div class="padded center">
-      <p class="spacey">
-        <button id="enableOfflineSupport">Enable Offline Access</button>
-        <button id="createCanvasPNG">Generate PNG image from
-          Canvas</button>
-      <div id="canvasPNG"></div>
-      <a id="typed_alg">[Algorithm]</a>
-      <br>
-      <br>
-      <div id="timer"></div>
-      </p>
+      <div id="playback_alg"></div>
       </div>
 
       <h2>twisty.js Info</h2>
       <div class="padded">
         <p class="spacey">
-          Notes: <a href="README.md">README.md</a> <br>
-          <span style="font-variant: small-caps;">GitHub</span>: <a
+          Based on: <a
             href="https://github.com/cubing/twisty.js">cubing/twisty.js</a>
+			<br>
+			Modifications by: <a href="https://www.nicbudd.com">Nicbudd</a>
           <br> 3D Library: <a
             href="https://github.com/mrdoob/three.js/">three.js</a> (by
           mrdoob)
+		  
+		  
         </p>
       </div>
+	  <h2>Settings</h2>
+		<div class="padded center">
+			
+            Renderer:
+            <input type="radio" name="renderer" value="Canvas" id="renderer_Canvas"></input>
+            <label for="renderer_Canvas">Canvas</label>
+            <input type="radio" name="renderer" value="WebGL" id="renderer_WebGL" checked="true"></input>
+            <label for="renderer_WebGL">WebGL</label>
+            <input type="radio" name="renderer" value="SVG" id="renderer_SVG"></input>
+            <label for="renderer_SVG">SVG</label>
+			
+			<br>
+			<input type="checkbox" id="hint_stickers" checked="true"/>
+            <label for="hint_stickers">Hint Stickers</label>
+			<input type="checkbox" id="stats"/>
+            <label for="stats">Show Statistics</label>
+
+            <br>
+            Stage:
+            <input type="radio" name="stage" value="full" id="stage_full" checked="true"></input>
+            <label for="stage_full">Full</label>
+            <input type="radio" name="stage" value="F2L" id="stage_F2L"></input>
+            <label for="stage_F2L">F2L</label>
+            <input type="radio" name="stage" value="PLL" id="stage_PLL"></input>
+            <label for="stage_PLL">PLL</label>
+            <input type="radio" name="stage" value="OLL" id="stage_OLL"></input>
+            <label for="stage_OLL">OLL</label>
+		</div>
 
       <h2>Debug</h2>
       <div class="padded">

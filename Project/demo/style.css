@@ -1,8 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300,400,500,600,700,800,900');
+
+
+/* colors
+
+White: #FFFFFF
+Light Gray: #D9D9D9
+Teal: #3C6E71
+Black: #353535
+Blue: #284B63
+
+
+
+*/
+
+:root{
+	--white: #FFFFFF;
+	--lightGray: #D9D9D9;
+	--teal: #3C6E71;
+	--black: #353535;
+	--blue: #284B63;
+	
+}
+
 body {
   margin: 0px;
   padding: 0px;
-  background: #FFF;
-  font-family: Helvetica, Tahoma, Arial;
+  background: var(--white);
+  color: var(--black);
+  font-family: "Noto Sans", Arial, sans-serif;
 }
 
 body,div {
@@ -20,25 +48,21 @@ p {
 }
 
 h1,h2,h3,h4,h5,h6 {
-  font-size: 18px;
-  margin: 0px;
+  font-size: 1.75em;
+  margin: 0.5em 0.3em 0.75em 0.3em;
   padding: 8px 12px;
-  color: #000;
-  font-weight: bold;
-  text-shadow: 2px 2px 1px #ACE;
-  border-bottom: 1px solid rgba(128, 160, 195, 0.5);
-}
-
-h2 {
-  font-size: 24px;
-  padding: 8px 12px;
+  color: var(--black);
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 1px solid black;
+  font-family: "Source Sans Pro";
+  text-align: center;
 }
 
 h1,h1 a {
   font-size: 64px;
-  color: #FFF;
+  color: var(--white);
   text-align: center;
-  text-shadow: 2px 2px 1px #88A;
   border-bottom: none;
   font-weight: bold;
   text-decoration: none;
@@ -46,23 +70,42 @@ h1,h1 a {
 }
 
 h1 a:hover {
-  text-shadow: 4px 4px 2px #000;
+
+}
+
+button {
+	border: none;
+	border-radius: 4px;
+	background: var(--teal);
+	inset: none;
+	color: var(--white);
+	font-weight: bold;
+	font-size: 1.15em;
+	padding: 0.25em 0.5em;
+	margin: 0.35em 0.5em;
+	transition: 0.2s;
+}
+
+button:hover{
+	background: var(--blue);
+	cursor: pointer;
 }
 
 .title {
   direction: rtl;
 }
 
+input[type='text']{
+	font-size: 1.15em;
+}
+
 div.header {
   height: 0;
-  background: #ACE;
   z-index: 10;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 1);
 }
 
 div.content {
-  background: #E0F0FF;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 1);
+  background: var(--white);
   margin-top: 0;
   position: absolute;
   top: 0;
@@ -106,7 +149,7 @@ div.right {
 }
 
 #playback_alg {
-  font-size: 200%;
+  font-size: 100%;
 }
 
 #playback_alg span {
@@ -127,27 +170,6 @@ div.right {
   text-overflow: ellipsis;
 }
 
-#timer {
-  background: #ACE;
-  padding: 4px;
-  font-family: monospace;
-  font-size: 48px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
-}
-
-#timer.reset { 
-    background: #F80;
-}
-
-#timer.running { 
-    background: #FF0;
-}
-
-#timer.stopped { 
-    background: #0F0;
-    box-shadow: 0px 0px 64px rgba(0, 255, 0, 1);
-}
-
 #twistyContainer {
 }
 
@@ -161,7 +183,7 @@ div.right {
   position: absolute;
   right: 10px;
   top: 10px;
-  background: none;
+  background: var(--white);
   border: none;
   color: none;
   width: 1em;
@@ -173,22 +195,7 @@ div.right {
 }
 
 .checkered {
-  background-color: #DDD;
-}
-
-#canvasPNG {
-  text-align: center;
-}
-
-#canvasPNG img {
-  max-height: 200px;
-  max-width: 75%;
-  background: rgba(0, 0, 255, 0.05);
-  border: 1px solid #00F;
-}
-
-#canvasPNG img:hover {
-  background: rgba(0, 0, 255, 0.1);
+  background-color: var(--lightGray);
 }
 
 .center {
@@ -197,64 +204,27 @@ div.right {
 
 /* Debugging and Testing */
 
-/* From http://leaverou.me/demos/css3-patterns.html */
-.hi {
-  background-color: rgba(255, 127, 0, 0.5);
-  background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, .2)
-    25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%,
-    rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
-  background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, .2)
-    25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%,
-    rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
-  background-image: -ms-linear-gradient(-45deg, rgba(255, 255, 255, .2)
-    25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%,
-    rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
-  background-image: -o-linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%,
-    transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%,
-    rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
-  background-image: linear-gradient(-45deg, rgba(255, 255, 255, .2) 25%,
-    transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%,
-    rgba(255, 255, 255, .2) 75%, transparent 75%, transparent );
-  -webkit-background-size: 50px 50px;
-  -moz-background-size: 50px 50px;
-  background-size: 32px 32px; /* Controls the size of the stripes */
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+#debug{
+	font-family: "Roboto Mono", monospace;
+	font-size: 0.75em;
+	padding: 0.25em;
+}
+
+#debug hr{
+	margin: 0.25em;
+	border-style: none;
+	height: 2px;
+	background: var(--lightGray);
 }
 
 .err {
-  background-color: #F44;
+  background-color: var(--teal);
   padding: 4px;
   border-radius: 8px;
 }
 
 #twistyContainer {
-  background-color: #EAEAEA;
-  background-image:
-    -webkit-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD),
-    -webkit-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD);
-  background-image:
-    -moz-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD),
-    -moz-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD);
-  background-image:
-    -o-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD),
-    -o-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD);
-  background-image:
-    -ms-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD),
-    -ms-linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD);
-  background-image:
-    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD),
-    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent
-    75%, #DDD 75%, #DDD);
   background-size: 32px 32px;
   background-position: 0 0, 16px 16px;
-  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+
 }

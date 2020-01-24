@@ -126,12 +126,8 @@ $(document).ready(function() {
 
   var currentCubeSize = 3;
   reloadCube();
+  
 
-
-  $("#allow_dragging").bind("change", reloadCube);
-  $("#double_sided").bind("change", reloadCube);
-  $("#sticker_border").bind("change", reloadCube);
-  $("#cubies").bind("change", reloadCube);
   $("#hint_stickers").bind("change", reloadCube);
 
   $('input[name="stage"]').bind("change", reloadCube);
@@ -151,6 +147,7 @@ $(document).ready(function() {
   
   $("#change").click(function(){
 		twistyScene.clearMoveList();
+		twistyScene.setIndex(-1);
 	});	
 
   $("#play").click(twistyScene.play.start);
@@ -162,13 +159,6 @@ $(document).ready(function() {
   $("#speed").bind("change", function() {
     var speed = $('#speed')[0].valueAsNumber
     twistyScene.setSpeed(speed);
-  });
-
-  $("#alg_superflip").bind("click", function() {
-    var once = "M' U' M' U' M' U' M' U' x y ";
-    var superflip = alg.cube.stringToAlg(once + once + once);
-    twistyScene.queueMoves(superflip);
-    twistyScene.play.start();
   });
 
   $("#parsed_alg1").bind("click", function() {
@@ -244,10 +234,11 @@ $(document).ready(function() {
   function escapeAlg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
 
   function reloadCube() {
-    log("Current cube size: " + currentCubeSize);
+    log("Reloading Cube");
 
     var renderer = THREE[$('input[name="renderer"]:checked').val() + "Renderer"]; //TODO: Unsafe
     var stage = $('input[name="stage"]:checked').val();
+	var statsOption = $('input[name="stats"]:checked').val();
     var speed = $('#speed')[0].valueAsNumber;
 
     twistyScene = new twisty.scene({
@@ -258,6 +249,7 @@ $(document).ready(function() {
     });
     $("#twistyContainer").empty();
     $("#twistyContainer").append($(twistyScene.getDomElement()));
+
 
     twistyScene.initializePuzzle({
       "type": "cube",
@@ -291,6 +283,13 @@ $(document).ready(function() {
         stopTimer();
       }
     });
+	
+	var statsBox = $("#twistyContainer").children().first().children().last()
+	statsBox.hide();
+	
+	$("#stats").bind("change", function(){
+	  statsBox.toggle();
+	});
   }
 
   $(window).resize(twistyScene.resize);
@@ -300,43 +299,9 @@ $(document).ready(function() {
   //$("#twistyContainer").addClass("canvasFocused");
   //$("#twistyContainer").removeClass("canvasFocused");
 
-  $(window).keydown(function(e) {
-    // This is kinda weird, we want to avoid turning the cube
-    // if we're in a textarea, or input field.
-    var focusedEl = document.activeElement.nodeName.toLowerCase();
-    var isEditing = focusedEl == 'textarea' || focusedEl == 'input';
-    if(isEditing) {
-      return;
-    }
-
-    var keyCode = e.keyCode;
-    switch(keyCode) {
-      case 27:
-        reloadCube();
-        e.preventDefault();
-        break;
-
-      case 32:
-        if (!isTiming()) {
-          var twisty = twistyScene.debug.model.twisty;
-          var scramble = twisty.generateScramble(twisty);
-          // We're going to get notified of the scrambling, and we don't
-          // want to start the timer when that's happening, so we keep track
-          // of the fact that we're scrambling.
-          cubeState = CubeState.scrambling;
-          twistyScene.applyMoves(scramble); //TODO: Use appropriate function.
-          twistyScene.redraw(); // Force redraw.
-          cubeState = CubeState.scrambled;
-          resetTimer();
-        }
-        e.preventDefault();
-        break;
-    }
-
-    twistyScene.keydown(e);
-  });
-
 });
+
+
 
 /*
  * Convenience Logging
@@ -362,38 +327,3 @@ function err(obj) {
   $("#debug").html(previousHTML);
 }
 
-/*
- * Algs for testing
- */
-
-function makeCCC(n) {
-
-  var cccMoves = [];
-
-  for (var i = 1; i<=n/2; i++) {
-    var moreMoves = [
-      {base: "l", endLayer: i, amount: -1},
-      {base: "u", endLayer: i, amount: 1},
-      {base: "r", endLayer: i, amount: -1},
-      {base: "f", endLayer: i, amount: -1},
-      {base: "u", endLayer: i, amount: 1},
-      {base: "l", endLayer: i, amount: -2},
-      {base: "u", endLayer: i, amount: -2},
-      {base: "l", endLayer: i, amount: -1},
-      {base: "u", endLayer: i, amount: -1},
-      {base: "l", endLayer: i, amount: 1},
-      {base: "u", endLayer: i, amount: -2},
-      {base: "d", endLayer: i, amount: 1},
-      {base: "r", endLayer: i, amount: -1},
-      {base: "d", endLayer: i, amount: -1},
-      {base: "f", endLayer: i, amount: 2},
-      {base: "r", endLayer: i, amount: 2},
-      {base: "u", endLayer: i, amount: -1}
-    ];
-
-    cccMoves = cccMoves.concat(moreMoves);
-  }
-
-  return cccMoves;
-
-}
