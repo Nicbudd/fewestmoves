@@ -160,31 +160,31 @@ $(document).ready(function() {
 		console.log(inputArray)
 	}
 	
-	function parseMovesToArray(inputArray){
+	function parseMovesInArray(inputArray){
 		//remove comments
-		while (moveArray.indexOf("/") != -1){
+		while (inputArray.indexOf("/") != -1){
 			
-			var lineBreak = moveArray.indexOf("\n")
+			var lineBreak = inputArray.indexOf("\n")
 			if (lineBreak == -1){
-				lineBreak = moveArray.length
+				lineBreak = inputArray.length
 			}
 
-			moveArray.splice(moveArray.indexOf("/"), lineBreak - moveArray.indexOf("/") + 1)
+			inputArray.splice(inputArray.indexOf("/"), lineBreak - inputArray.indexOf("/") + 1)
 		}
 
 
 		//combine move modifiers with moves and remove spaces
-		for (var i = 0; i < moveArray.length; i++){
-			switch (moveArray[i]){
+		for (var i = 0; i < inputArray.length; i++){
+			switch (inputArray[i]){
 				case "'":
 				case "2":
-					moveArray[i-1] += moveArray[i];
-					moveArray.splice(i, 1)
+					inputArray[i-1] += inputArray[i];
+					inputArray.splice(i, 1)
 					i--
 					break;
 					
 				case " ":
-					moveArray.splice(i, 1)
+					inputArray.splice(i, 1)
 					i--
 					break;
 			}
@@ -196,15 +196,11 @@ $(document).ready(function() {
 		var moveUnparsed = $("#moveInput").val();
 		var moveArray = moveUnparsed.split("");
 		
-		
+		moveArray = parseMovesInArray(moveArray);
 		
 		invert(moveArray);
 		
-		
-		
 		console.log(moveArray);
-
-
 		
 	}
 	
@@ -238,7 +234,8 @@ $(document).ready(function() {
 	});
 	
 	$("invertSelection").click(function(){
-		
+		var selection = window.getSelection()
+		console.log(selection);
 	});
 		
 
@@ -287,31 +284,6 @@ $(document).ready(function() {
 
   twistyScene.setCameraPosition(0);
 
-  $("#enableOfflineSupport").bind("click", function() {
-    window.location.href = "inc/offline/offline.html";
-  });
-
-  $("#createCanvasPNG").bind("click", function() {
-    var canvas = twistyScene.getCanvas();
-    var img = canvas.toDataURL("image/png");
-    log("Generating image...");
-    $("#canvasPNG").fadeTo(0, 0);
-    $("#canvasPNG").html('<a href="' + img + '" target="blank"><img src="'+img+'"/></a>');
-    $("#canvasPNG").fadeTo("slow", 1);
-  });
-
-  function reDimensionCube() {
-    var dim = parseInt($("#cubeDimension").val());
-    if (!dim) {
-      dim = 3;
-    }
-    dim = Math.min(Math.max(dim, 1), 16);
-    if (dim != currentCubeSize) {
-      currentCubeSize = dim;
-      reloadCube();
-    }
-    resetTimer();
-  }
 
   // From alg.garron.us
   function escapeAlg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
