@@ -99,6 +99,22 @@ input[type='text']{
 	font-size: 1.15em;
 }
 
+textarea {
+	width: 75%;
+	font-size: 1.15em;
+	font-family: "Roboto Mono", monospace;
+}
+
+#playback{
+	font-size: 1.25em;
+}
+
+#playback button{
+
+	padding: 0.5em 1em;
+	margin: 0.1em;
+}
+
 div.header {
   height: 0;
   z-index: 10;

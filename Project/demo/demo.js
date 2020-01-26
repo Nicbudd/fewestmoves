@@ -115,40 +115,21 @@ var twistyScene;
 
 $(document).ready(function() {
 
-  /*
-   * Caching Stuff.
-   */
-
-
-  cache.addEventListener('updateready', updateReadyCache, false);
-
   log("Document ready.");
 
   var currentCubeSize = 3;
-  reloadCube();
   
+  reloadCube(); 
 
   $("#hint_stickers").bind("change", reloadCube);
-
   $('input[name="stage"]').bind("change", reloadCube);
-
-  $("#alg_ccc").bind("click", function() {
-    twistyScene.queueMoves(makeCCC(parseInt($("#cubeDimension").val())));
-    twistyScene.play.start();
-  });
-
-  $("#lucasparity").bind("click", function() {
-    var lucasparity = alg.cube.stringToAlg("r U2 x r U2 r U2 r' U2 L U2 r' U2 r U2 r' U2 r'");
-    twistyScene.queueMoves(lucasparity);
-    twistyScene.play.start();
-  });
-
   $('input[name="renderer"]').click(reloadCube);
   
-  $("#change").click(function(){
+	/*$("#change").click(function(){
 		twistyScene.clearMoveList();
 		twistyScene.setIndex(-1);
 	});	
+	*/
 
   $("#play").click(twistyScene.play.start);
   $("#previous").click(twistyScene.play.back);
@@ -161,7 +142,108 @@ $(document).ready(function() {
     twistyScene.setSpeed(speed);
   });
 
-  $("#parsed_alg1").bind("click", function() {
+	function invert(inputArray){
+		
+		//invert modifiers for each notation
+		for (var i = 0; i < inputArray.length; i++){
+			inputArray[i] = inputArray[i].split("")
+			if (inputArray[i][1] == "'"){
+				delete inputArray[i][1]
+			} else if (inputArray[i][1] === undefined){
+				inputArray[i][1] = "'"
+			}
+			inputArray[i] = inputArray[i].join("")
+		}
+		
+		//reverse
+		inputArray.reverse()
+		console.log(inputArray)
+	}
+	
+	function parseMovesToArray(inputArray){
+		//remove comments
+		while (moveArray.indexOf("/") != -1){
+			
+			var lineBreak = moveArray.indexOf("\n")
+			if (lineBreak == -1){
+				lineBreak = moveArray.length
+			}
+
+			moveArray.splice(moveArray.indexOf("/"), lineBreak - moveArray.indexOf("/") + 1)
+		}
+
+
+		//combine move modifiers with moves and remove spaces
+		for (var i = 0; i < moveArray.length; i++){
+			switch (moveArray[i]){
+				case "'":
+				case "2":
+					moveArray[i-1] += moveArray[i];
+					moveArray.splice(i, 1)
+					i--
+					break;
+					
+				case " ":
+					moveArray.splice(i, 1)
+					i--
+					break;
+			}
+		}
+	}
+
+	function fmcParse(){
+		var scrambUnparsed = $("#scrambInput").val();
+		var moveUnparsed = $("#moveInput").val();
+		var moveArray = moveUnparsed.split("");
+		
+		
+		
+		invert(moveArray);
+		
+		
+		
+		console.log(moveArray);
+
+
+		
+	}
+	
+	
+	$("#moveInput").bind("keyup keydown change", function(){
+		twistyScene.clearMoveList();
+		
+		var init = alg.cube.stringToAlg($("#scrambInput").val());
+		var algo = alg.cube.stringToAlg($("#moveInput").val());
+		var type = $("#solve").is(':checked') ? "solve" : "gen";
+		
+		init = alg.cube.algToMoves(init);
+		algo = alg.cube.algToMoves(algo);
+		
+		twistyScene.setupAnimation(
+			algo,
+			{
+				init: init,
+				type: type
+			}
+		);
+				
+		setTimeout(function(){
+			twistyScene.play.reset();
+			twistyScene.play.skip();
+		}, 300);
+		
+		fmcParse();
+
+		
+	});
+	
+	$("invertSelection").click(function(){
+		
+	});
+		
+
+
+  /*$("#parsed_alg1").bind("click", function() {
     var algo = alg.cube.stringToAlg($("#parse_alg").val());
     var moves = alg.cube.algToMoves(algo);
     twistyScene.queueMoves(moves);
@@ -201,6 +283,7 @@ $(document).ready(function() {
       f(moveString, i);
     }
   });
+  */
 
   twistyScene.setCameraPosition(0);
 
