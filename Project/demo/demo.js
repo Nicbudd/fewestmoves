@@ -202,10 +202,13 @@ $(document).ready(function() {
 		var moveUnparsed = $("#moveInput").val();
 		
 		var moveArray = textMovesToArray(moveUnparsed);
+		$("#skeleton").val(genSkeleton(moveArray));
 		
 		invert(moveArray);
 		
-		
+	}
+	
+	function genSkeleton(inputArray){
 		
 	}
 	
