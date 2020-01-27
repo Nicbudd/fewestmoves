@@ -210,6 +210,22 @@ $(document).ready(function() {
 	
 	function genSkeleton(inputArray){
 		
+		var inverse = []
+	
+		while (inputArray.indexOf("(") != -1){
+			
+			var lineBreak = inputArray.indexOf(")")
+			if (lineBreak == -1){
+				lineBreak = inputArray.length
+			}
+			
+			inverse += 	inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
+			inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
+		}
+		
+		
+		inputArray += invert(inverse);
+		return inputArray;
 	}
 	
 	function redoCube(){
