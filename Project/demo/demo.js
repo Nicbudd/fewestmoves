@@ -202,7 +202,8 @@ $(document).ready(function() {
 		var moveUnparsed = $("#moveInput").val();
 		
 		var moveArray = textMovesToArray(moveUnparsed);
-		$("#skeleton").val(genSkeleton(moveArray));
+		var skeleton = genSkeleton(moveArray).join(" ");
+		$("#skeleton").val(skeleton);
 		
 		invert(moveArray);
 		
@@ -219,12 +220,12 @@ $(document).ready(function() {
 				lineBreak = inputArray.length
 			}
 			
-			inverse += 	inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
+			inverse.concat(inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("(")))
 			inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
 		}
 		
 		
-		inputArray += invert(inverse);
+		inputArray.concat(invert(inverse));
 		return inputArray;
 	}
 	
