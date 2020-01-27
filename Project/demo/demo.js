@@ -147,10 +147,16 @@ $(document).ready(function() {
 		//invert modifiers for each notation
 		for (var i = 0; i < inputArray.length; i++){
 			inputArray[i] = inputArray[i].split("")
-			if (inputArray[i][1] == "'"){
-				delete inputArray[i][1]
-			} else if (inputArray[i][1] === undefined){
-				inputArray[i][1] = "'"
+			if (inputArray[i][0] == "("){
+				inputArray[i][0] = ")"
+			} else if (inputArray[i][0] == ")"){
+				inputArray[i][0] = "("
+			} else {
+				if (inputArray[i][1] == "'"){
+					delete inputArray[i][1]
+				} else if (inputArray[i][1] === undefined){
+					inputArray[i][1] = "'"
+				}
 			}
 			inputArray[i] = inputArray[i].join("")
 		}
@@ -215,7 +221,9 @@ $(document).ready(function() {
 	
 	function genSkeleton(inputArray){
 		
-		var inverse = [""]
+		console.log(inputArray)
+		
+		var inverse = []
 	
 		while (inputArray.indexOf("(") != -1){
 			
@@ -225,15 +233,22 @@ $(document).ready(function() {
 			}
 			
 			var newInvert = inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("(") - 1)
-			console.log(newInvert)
-			inverse.concat(newInvert)
-			console.log(inverse)
-			inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
+			inverse = inverse.concat(newInvert)
+			inputArray.splice(inputArray.indexOf("("), 2)
 		}
 		
-		console.log(inverse)
-		inputArray.concat(invert(inverse));
+		inputArray = inputArray.concat(invert(inverse));
+		
+		
+		for (var i = 0; i < inputArray.length; i++){
+			if (inputArray[i] == "\n"){
+				inputArray.splice(i, 1)
+				i--
+			}
+		}
+		
 		return inputArray;
+		
 	}
 	
 	function redoCube(){
