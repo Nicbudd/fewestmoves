@@ -194,6 +194,8 @@ $(document).ready(function() {
 			}
 		}
 		
+		
+		
 		return inputArray
 	}
 
@@ -202,6 +204,8 @@ $(document).ready(function() {
 		var moveUnparsed = $("#moveInput").val();
 		
 		var moveArray = textMovesToArray(moveUnparsed);
+		console.log(moveArray)
+		
 		var skeleton = genSkeleton(moveArray).join(" ");
 		$("#skeleton").val(skeleton);
 		
@@ -211,7 +215,7 @@ $(document).ready(function() {
 	
 	function genSkeleton(inputArray){
 		
-		var inverse = []
+		var inverse = [""]
 	
 		while (inputArray.indexOf("(") != -1){
 			
@@ -220,8 +224,10 @@ $(document).ready(function() {
 				lineBreak = inputArray.length
 			}
 			
-			var newInvert = inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("("))
+			var newInvert = inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("(") - 1)
+			console.log(newInvert)
 			inverse.concat(newInvert)
+			console.log(inverse)
 			inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
 		}
 		
