@@ -220,11 +220,12 @@ $(document).ready(function() {
 				lineBreak = inputArray.length
 			}
 			
-			inverse.concat(inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("(")))
+			var newInvert = inputArray.splice(inputArray.indexOf("(") + 1, lineBreak - inputArray.indexOf("("))
+			inverse.concat(newInvert)
 			inputArray.splice(inputArray.indexOf("("), lineBreak - inputArray.indexOf("(") + 1)
 		}
 		
-		
+		console.log(inverse)
 		inputArray.concat(invert(inverse));
 		return inputArray;
 	}
