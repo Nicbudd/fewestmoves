@@ -157,10 +157,14 @@ $(document).ready(function() {
 		
 		//reverse
 		inputArray.reverse()
-		console.log(inputArray)
+		
+		return inputArray
 	}
 	
-	function parseMovesInArray(inputArray){
+	function textMovesToArray(inputText){
+		
+		var inputArray = inputText.split("");
+		
 		//remove comments
 		while (inputArray.indexOf("/") != -1){
 			
@@ -189,28 +193,29 @@ $(document).ready(function() {
 					break;
 			}
 		}
+		
+		return inputArray
 	}
 
 	function fmcParse(){
 		var scrambUnparsed = $("#scrambInput").val();
 		var moveUnparsed = $("#moveInput").val();
-		var moveArray = moveUnparsed.split("");
 		
-		moveArray = parseMovesInArray(moveArray);
+		var moveArray = textMovesToArray(moveUnparsed);
 		
 		invert(moveArray);
 		
-		console.log(moveArray);
+		
 		
 	}
 	
-	
-	$("#moveInput").bind("keyup keydown change", function(){
+	function redoCube(){
 		twistyScene.clearMoveList();
 		
 		var init = alg.cube.stringToAlg($("#scrambInput").val());
 		var algo = alg.cube.stringToAlg($("#moveInput").val());
-		var type = $("#solve").is(':checked') ? "solve" : "gen";
+		var type = "gen"
+		//var type = $("#solve").is(':checked') ? "solve" : "gen";
 		
 		init = alg.cube.algToMoves(init);
 		algo = alg.cube.algToMoves(algo);
@@ -222,20 +227,48 @@ $(document).ready(function() {
 				type: type
 			}
 		);
-				
+		
 		setTimeout(function(){
 			twistyScene.play.reset();
 			twistyScene.play.skip();
 		}, 300);
 		
+	}
+	
+	
+	$("#moveInput").bind("keyup keydown change", function(){	
+	
+		redoCube();
 		fmcParse();
 
 		
 	});
 	
-	$("invertSelection").click(function(){
-		var selection = window.getSelection()
-		console.log(selection);
+	$("#invertSelection").click(function(){
+		var selection = window.getSelection();
+		var selectionString = selection.toString();
+		var selectionStart = $("#moveInput")[0].selectionStart;
+		var selectionEnd = $("#moveInput")[0].selectionEnd;
+		
+		var selectionArray = textMovesToArray(selectionString);
+		var invertedArray = invert(selectionArray);
+		var invertedText = invertedArray.join(" ");
+
+		
+		var textareaArray = $("#moveInput").val().split("")
+		
+
+		textareaArray.splice(selectionStart, selectionEnd - selectionStart);
+
+		
+		textareaArray.splice(selectionStart, 0, invertedText);
+		$("#moveInput").val(textareaArray.join(""))
+		
+		twistyScene.play.reset();
+		twistyScene.play.skip();
+		
+		redoCube();
+		
 	});
 		
 
