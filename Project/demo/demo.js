@@ -144,6 +144,7 @@ $(document).ready(function() {
 
 	function invert(inputArray){
 		
+
 		//invert modifiers for each notation
 		for (var i = 0; i < inputArray.length; i++){
 			inputArray[i] = inputArray[i].split("")
@@ -151,6 +152,10 @@ $(document).ready(function() {
 				inputArray[i][0] = ")"
 			} else if (inputArray[i][0] == ")"){
 				inputArray[i][0] = "("
+			} else if (inputArray[i][0] == " "){
+				
+			} else if (inputArray[i][0] == "\n"){
+				
 			} else {
 				if (inputArray[i][1] == "'"){
 					delete inputArray[i][1]
@@ -169,18 +174,40 @@ $(document).ready(function() {
 	
 	function textMovesToArray(inputText){
 		
+		//remove comments
+		var i = 0
+		while (inputText.indexOf("//") != -1 && i < 10){
+			
+			
+			
+			var lineBreak = inputText.indexOf("\n", inputText.indexOf("//"))
+			if (lineBreak == -1){
+				lineBreak = inputText.length
+			}
+			
+			
+			
+			console.log(inputText.indexOf("//"));
+			console.log(lineBreak);
+			console.log(lineBreak - inputText.indexOf("//"));
+		
+			//inputText.slice(inputText.indexOf("//"), lineBreak - inputText.indexOf("//"));
+			
+			var leftText = inputText.slice(0, inputText.indexOf("//"));
+			var rightText = inputText.slice(lineBreak, inputText.length);
+			inputText = leftText + rightText;
+			
+			console.log(inputText);
+			i++;
+			
+		}
+		
+		console.log(inputText);
+		
 		var inputArray = inputText.split("");
 		
-		//remove comments
-		while (inputArray.indexOf("/") != -1){
-			
-			var lineBreak = inputArray.indexOf("\n")
-			if (lineBreak == -1){
-				lineBreak = inputArray.length
-			}
-
-			inputArray.splice(inputArray.indexOf("/"), lineBreak - inputArray.indexOf("/") + 1)
-		}
+		
+		
 
 
 		//combine move modifiers with moves and remove spaces
@@ -206,22 +233,26 @@ $(document).ready(function() {
 	}
 
 	function fmcParse(){
+		
 		var scrambUnparsed = $("#scrambInput").val();
 		var moveUnparsed = $("#moveInput").val();
 		
+		//console.log("at")
 		var moveArray = textMovesToArray(moveUnparsed);
-		console.log(moveArray)
+		//console.log("past")
 		
 		var skeleton = genSkeleton(moveArray).join(" ");
+		
+		
 		$("#skeleton").val(skeleton);
 		
-		invert(moveArray);
+
 		
 	}
 	
 	function genSkeleton(inputArray){
 		
-		console.log(inputArray)
+
 		
 		var inverse = []
 	
@@ -252,10 +283,13 @@ $(document).ready(function() {
 	}
 	
 	function redoCube(){
+		
+		fmcParse();
+		
 		twistyScene.clearMoveList();
 		
 		var init = alg.cube.stringToAlg($("#scrambInput").val());
-		var algo = alg.cube.stringToAlg($("#moveInput").val());
+		var algo = alg.cube.stringToAlg($("#skeleton").val());
 		var type = "gen"
 		//var type = $("#solve").is(':checked') ? "solve" : "gen";
 		
@@ -270,21 +304,23 @@ $(document).ready(function() {
 			}
 		);
 		
-		setTimeout(function(){
+		//setTimeout(function(){
 			twistyScene.play.reset();
 			twistyScene.play.skip();
-		}, 300);
+		//}, 300);
 		
 	}
 	
 	
-	$("#moveInput").bind("keyup keydown change", function(){	
-	
+	$("#moveInput").bind("keyup keydown change focus blur", function(){	
 		redoCube();
-		fmcParse();
 
-		
 	});
+	
+	$("#scrambInput").bind("keyup keydown change focus blur", function(){	
+		redoCube();
+	});
+	
 	
 	$("#invertSelection").click(function(){
 		var selection = window.getSelection();
@@ -294,9 +330,44 @@ $(document).ready(function() {
 		
 		var selectionArray = textMovesToArray(selectionString);
 		var invertedArray = invert(selectionArray);
-		var invertedText = invertedArray.join(" ");
-
 		
+		
+		var invertedText = ""
+		
+		//join function but spicier
+		for (var i = 0; i < invertedArray.length; i++){
+			
+			//if its the last character don't add a space
+			if (i == invertedArray.length - 1){
+				invertedText += invertedArray[i]
+			
+			//if it's "(, ), \n, space", don't add a space
+			//a space shouldn't really happen but it's in there as a precaution
+			} else if (invertedArray[i] == "(" || invertedArray[i] == ")" || invertedArray[i] == "\n" || invertedArray[i] == " "){
+				invertedText += invertedArray[i]
+			
+			//don't add a space if character after this one is ) or \n
+			} else if (invertedArray[i+1] == ")" || invertedArray[i+1] == "\n"){
+				invertedText += invertedArray[i]
+			
+			//else add a space
+			} else {
+				invertedText += invertedArray[i]
+				invertedText += " "
+			}
+			
+		}
+		
+		/*
+		console.log(invertedText)
+		var i = 0
+		while (invertedText.indexOf("( ") != -1 && i < 100){
+			invertedText = invertedText.slice(invertedText.indexOf("( ") + 1, 1)
+			i++
+			console.log(invertedText)
+		}
+		*/
+	
 		var textareaArray = $("#moveInput").val().split("")
 		
 
