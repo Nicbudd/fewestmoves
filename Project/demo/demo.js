@@ -381,7 +381,16 @@ $(document).ready(function() {
 		redoCube();
 		setCookies();
 	});
+	
+	$("#skeleton").bind("keyup keydown change focus blur", function(){	
+		redoCube();
+		setCookies();
+	});
 
+	$("#insertions").bind("keyup keydown change focus blur", function(){	
+		redoCube();
+		setCookies();
+	});
 	
 	$("#invertSelection").click(function(){
 		var selection = window.getSelection();
