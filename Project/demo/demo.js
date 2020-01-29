@@ -23,7 +23,8 @@ function updateReadyCache() {
 }
 
 function getCookie(cname) {
-	console.log(document.cookie)
+	var x = document.cookie
+	console.log(x)
   var name = cname + "=";
   var ca = document.cookie.split(';');
   for(var i = 0; i < ca.length; i++) {
@@ -45,6 +46,8 @@ function setCookies(){
 	var d = new Date();
 	d.setTime(d.getTime() + (365*24*60*60*1000));
 	var expires = "expires=" + d.toGMTString() + "; "
+	var path = "path=/"
+	
 	
 	var cookies = [
 	["scramb", $("#scrambInput").val()],
@@ -55,16 +58,13 @@ function setCookies(){
 	
 	var cookieStr = ""
 	for (var i = 0; i < cookies.length; i++){
-		cookieStr = cookieStr.concat(cookies[i][0], "=", cookies[i][1], "; ");
+		var hi = ""
+		//cookieStr = cookieStr.concat(cookies[i][0], "=", cookies[i][1], "; ");
+		console.log(hi);
+		document.cookie = hi.concat(cookies[i][0], "=", cookies[i][1], "; ", expires, path);
+		console.log(hi);
 	}
-	
-	cookieStr += expires
-	cookieStr += "path=/"
-	
-	console.log(cookieStr);
-	
-	document.cookie = cookieStr
-	
+
 	console.log(document.cookie)
 }
 
