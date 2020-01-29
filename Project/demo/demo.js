@@ -355,6 +355,7 @@ $(document).ready(function() {
 		console.log(init)
 		console.log(algo)
 		
+		
 		twistyScene.setupAnimation(
 			algo,
 			{
@@ -363,6 +364,7 @@ $(document).ready(function() {
 			}
 		);
 		
+		twistyScene.setIndex(0);
 		
 		//setTimeout(function(){
 			twistyScene.play.reset();
