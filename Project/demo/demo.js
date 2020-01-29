@@ -170,7 +170,7 @@ $(document).ready(function() {
   
   
   $("#scrambInput").val(getCookie("scramb"));
-  $("#moveInput").val(getCookie("moves"));
+  $("#moveInput").val(getCookie("move"));
   $("#skeleton").val(getCookie("skeleton"));
   $("#insertions").val(getCookie("insertions"));
   
@@ -352,7 +352,8 @@ $(document).ready(function() {
 		init = alg.cube.algToMoves(init);
 		algo = alg.cube.algToMoves(algo);
 		
-		console.log($("#scrambInput").val())
+		console.log(init)
+		console.log(algo)
 		
 		twistyScene.setupAnimation(
 			algo,
@@ -372,18 +373,18 @@ $(document).ready(function() {
 	}
 	
 	
-	$("#moveInput").bind("keyup keydown change", function(){	
-		redoCube();
-		setCookies();
-	});
-	
 	$("#scrambInput").bind("keyup keydown change focus blur", function(){	
 		redoCube();
 		setCookies();
 	});
 	
-	$("#skeleton").bind("keyup keydown change focus blur", function(){	
+	$("#moveInput").bind("keyup keydown change", function(){	
 		redoCube();
+		setCookies();
+	});
+	
+	$("#skeleton").bind("keyup keydown change focus blur", function(){	
+		//redoCube();
 		setCookies();
 	});
 
