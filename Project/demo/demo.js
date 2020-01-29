@@ -63,7 +63,7 @@ function setCookies(){
 	
 	console.log(cookieStr)
 	
-	document.cookie = "scramb=R U R\'; move=R U R\'; expires=Thu, 28 Jan 2021 18:11:50 GMT"//cookieStr
+	document.cookie = "scramb=R U' R\'; move=R U R\'; expires=Thu, 28 Jan 2021 18:11:50 GMT"//cookieStr
 	
 	console.log(document.cookie)
 }
