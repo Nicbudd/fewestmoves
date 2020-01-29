@@ -44,7 +44,7 @@ function setCookies(){
 	
 	var d = new Date();
 	d.setTime(d.getTime() + (365*24*60*60*1000));
-	var expires = "expires=" + d.toGMTString();
+	var expires = "expires=" + d.toGMTString() + ";"
 	
 	var cookies = [
 	["scramb", $("#scrambInput").val()],
@@ -62,7 +62,9 @@ function setCookies(){
 	cookieStr += "path=/"
 	
 	console.log(cookieStr)
-	document.cookie = cookieStr
+	
+	document.cookie = "scramb=R U R\'; move=R U R\'; expires=Thu, 28 Jan 2021 18:11:50 GMT"//cookieStr
+	
 	console.log(document.cookie)
 }
 
