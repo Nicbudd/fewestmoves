@@ -60,9 +60,11 @@ function setCookies(){
 	for (var i = 0; i < cookies.length; i++){
 		var hi = ""
 		//cookieStr = cookieStr.concat(cookies[i][0], "=", cookies[i][1], "; ");
+		hi = hi.concat(cookies[i][0], "=", cookies[i][1], "; ", expires, path);
 		console.log(hi);
-		document.cookie = hi.concat(cookies[i][0], "=", cookies[i][1], "; ", expires, path);
-		console.log(hi);
+		document.cookie = hi 
+		var x = document.cookie
+		console.log(x)
 	}
 
 	console.log(document.cookie)
