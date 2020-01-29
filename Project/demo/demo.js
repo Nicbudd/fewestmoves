@@ -53,7 +53,7 @@ function setCookies(){
 	["scramb", $("#scrambInput").val()],
 	["move", $("#moveInput").val()],
 	["skeleton", $("#skeleton").val()],
-	["insertions", $("insertions").val()]
+	["insertions", $("#insertions").val()]
 	]
 	
 	var cookieStr = ""
@@ -169,7 +169,10 @@ $(document).ready(function() {
   
   
   
-  $("#scrambInput").val(getCookie("scramb"))
+  $("#scrambInput").val(getCookie("scramb"));
+  $("#moveInput").val(getCookie("moves"));
+  $("#skeleton").val(getCookie("skeleton"));
+  $("#insertions").val(getCookie("insertions"));
   
   reloadCube(); 
 
