@@ -290,11 +290,14 @@ $(document).ready(function() {
 		
 		var init = alg.cube.stringToAlg($("#scrambInput").val());
 		var algo = alg.cube.stringToAlg($("#skeleton").val());
+		
 		var type = "gen"
 		//var type = $("#solve").is(':checked') ? "solve" : "gen";
 		
 		init = alg.cube.algToMoves(init);
 		algo = alg.cube.algToMoves(algo);
+		
+		console.log($("#scrambInput").val())
 		
 		twistyScene.setupAnimation(
 			algo,
@@ -304,10 +307,12 @@ $(document).ready(function() {
 			}
 		);
 		
+		
 		//setTimeout(function(){
 			twistyScene.play.reset();
 			twistyScene.play.skip();
 		//}, 300);
+
 		
 	}
 	
@@ -320,7 +325,7 @@ $(document).ready(function() {
 	$("#scrambInput").bind("keyup keydown change focus blur", function(){	
 		redoCube();
 	});
-	
+
 	
 	$("#invertSelection").click(function(){
 		var selection = window.getSelection();
