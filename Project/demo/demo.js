@@ -22,6 +22,50 @@ function updateReadyCache() {
   location.reload(true); // For now
 }
 
+function getCookie(cname) {
+	console.log(document.cookie)
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function setCookies(){
+	
+	console.log("hell yea");
+	
+	var d = new Date();
+	d.setTime(d.getTime() + (365*24*60*60*1000));
+	var expires = "expires=" + d.toGMTString();
+	
+	var cookies = [
+	["scramb", $("#scrambInput").val()],
+	["move", $("#moveInput").val()],
+	["skeleton", $("#skeleton").val()],
+	["insertions", $("insertions").val()]
+	]
+	
+	var cookieStr = ""
+	for (var i = 0; i < cookies.length; i++){
+		cookieStr = cookieStr.concat(cookies[i][0], "=", cookies[i][1], "; ");
+	}
+	
+	cookieStr += expires
+	cookieStr += "path=/"
+	
+	console.log(cookieStr)
+	document.cookie = cookieStr
+	console.log(document.cookie)
+}
+
 var startTime = null;
 var stopTime = null;
 function startTimer() {
@@ -118,6 +162,10 @@ $(document).ready(function() {
   log("Document ready.");
 
   var currentCubeSize = 3;
+  
+  
+  
+  $("#scrambInput").val(getCookie("scramb"))
   
   reloadCube(); 
 
@@ -317,13 +365,14 @@ $(document).ready(function() {
 	}
 	
 	
-	$("#moveInput").bind("keyup keydown change focus blur", function(){	
+	$("#moveInput").bind("keyup keydown change", function(){	
 		redoCube();
-
+		setCookies();
 	});
 	
 	$("#scrambInput").bind("keyup keydown change focus blur", function(){	
 		redoCube();
+		setCookies();
 	});
 
 	
