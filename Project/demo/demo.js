@@ -346,7 +346,7 @@ $(document).ready(function() {
 		var init = alg.cube.stringToAlg($("#scrambInput").val());
 		var algo = alg.cube.stringToAlg($("#skeleton").val());
 		
-		var type = "gen"
+		var type = "generator"
 		//var type = $("#solve").is(':checked') ? "solve" : "gen";
 		
 		init = alg.cube.algToMoves(init);
@@ -364,7 +364,6 @@ $(document).ready(function() {
 			}
 		);
 		
-		twistyScene.setIndex(0);
 		
 		//setTimeout(function(){
 			twistyScene.play.reset();
