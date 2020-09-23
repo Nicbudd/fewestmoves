@@ -450,6 +450,8 @@ twisty.scene = function(options) {
     type: "generator"
   }
 
+	var prevScramb = 
+	
   this.setupAnimation = function(algIn, options) {
     options = getOptions(options, setupDefaults);
 
@@ -457,12 +459,12 @@ twisty.scene = function(options) {
 
     model.preMoveList = options.init;
 	
-	console.log(model.preMoveList);
-	
     if (options.type === "solve") {
       var algInverse = alg.cube.invert(algIn);
       model.preMoveList = model.preMoveList.concat(algInverse);
     }
+	
+	
     that.applyMoves(model.preMoveList);
 
     that.queueMoves(algIn);

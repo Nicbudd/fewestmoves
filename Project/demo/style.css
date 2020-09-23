@@ -8,7 +8,9 @@
 
 White: #FFFFFF
 Light Gray: #D9D9D9
+Dark Gray: #B4B4B4
 Teal: #3C6E71
+New Teal: #58a2d6
 Black: #353535
 Blue: #284B63
 
@@ -18,8 +20,9 @@ Blue: #284B63
 
 :root{
 	--white: #FFFFFF;
-	--lightGray: #D9D9D9;
-	--teal: #3C6E71;
+	--lightGray: #B4B4B4;
+	--darkGray: #808080;
+	--teal: #58A2D6;
 	--black: #353535;
 	--blue: #284B63;
 	
@@ -99,10 +102,33 @@ input[type='text']{
 	font-size: 1.15em;
 }
 
+input[type='range']{
+	background-color: var(--teal);
+}
+
 textarea {
-	width: 75%;
-	font-size: 1em;
+	width: 85%;
+	font-size: 1.125em;
 	font-family: "Roboto Mono", monospace;
+	padding: 0.5em;
+	margin: 0.25em;
+	border: 2px solid var(--darkGray);
+	color: var(--darkGray);
+	outline: none;
+	color: var(--black);
+}
+
+textarea:focus {
+	border: 2px solid var(--black);
+
+}
+
+::placeholder{
+	color: var(--lightGray);
+}
+
+textarea:focus::placeholder {
+	color: var(--darkGray);
 }
 
 #playback{
@@ -211,7 +237,7 @@ div.right {
 }
 
 .checkered {
-  background-color: var(--lightGray);
+  background-color: #E6E6E6
 }
 
 .center {

@@ -240,30 +240,18 @@ $(document).ready(function() {
 				lineBreak = inputText.length
 			}
 			
-			
-			
-			console.log(inputText.indexOf("//"));
-			console.log(lineBreak);
-			console.log(lineBreak - inputText.indexOf("//"));
-		
 			//inputText.slice(inputText.indexOf("//"), lineBreak - inputText.indexOf("//"));
 			
 			var leftText = inputText.slice(0, inputText.indexOf("//"));
 			var rightText = inputText.slice(lineBreak, inputText.length);
 			inputText = leftText + rightText;
 			
-			console.log(inputText);
 			i++;
-			
 		}
 		
-		console.log(inputText);
 		
 		var inputArray = inputText.split("");
 		
-		
-		
-
 
 		//combine move modifiers with moves and remove spaces
 		for (var i = 0; i < inputArray.length; i++){
@@ -292,11 +280,9 @@ $(document).ready(function() {
 		var scrambUnparsed = $("#scrambInput").val();
 		var moveUnparsed = $("#moveInput").val();
 		
-		//console.log("at")
 		var moveArray = textMovesToArray(moveUnparsed);
-		//console.log("past")
 		
-		var skeleton = genSkeleton(moveArray).join(" ");
+		var skeleton = genSkeleton(moveArray);
 		
 		
 		$("#skeleton").val(skeleton);
@@ -305,9 +291,13 @@ $(document).ready(function() {
 		
 	}
 	
+	var oldSkeleton
+	
+	var insertionSymbols = ["!", "@", "#", "$", "%", "^", "&", "*", "+", "~"]
+	
 	function genSkeleton(inputArray){
 		
-
+		var skeleton = $("#skeleton").val();
 		
 		var inverse = []
 	
@@ -333,10 +323,37 @@ $(document).ready(function() {
 			}
 		}
 		
-		return inputArray;
+		
+		var outputText = inputArray.join(" ");
+		
+		
+		var insertions = []
+
+		for (var i = 0; i < insertionSymbols.length; i++){
+			var symb = insertionSymbols[i]
+			var index = skeleton.indexOf(symb)
+			
+			if (index != -1){
+				insertions.push([symb, index])
+				outputText = outputText.substr(0, index-1) + " " + symb + " " + outputText.substr(index)
+			}
+				
+		}
+		
+		console.log(outputText)
+		
+		console.log(insertions)
+		
+		
+		oldSkeleton = skeleton
+		
+		return outputText
+		
+		
 		
 	}
 	
+	var enablePlayback = true
 	function redoCube(){
 		
 		fmcParse();
@@ -344,7 +361,16 @@ $(document).ready(function() {
 		twistyScene.clearMoveList();
 		
 		var init = alg.cube.stringToAlg($("#scrambInput").val());
-		var algo = alg.cube.stringToAlg($("#skeleton").val());
+		var algo = alg.cube.stringToAlg($("#moveInput").val()); // R R' is to fix a strange bug
+		
+		if (algo[0] === undefined){
+			algo = alg.cube.stringToAlg("R R'")
+			enablePlayback = false
+		} else {
+			enablePlayback = true
+		}
+		
+		console.log(algo)
 		
 		var type = "generator"
 		//var type = $("#solve").is(':checked') ? "solve" : "gen";
